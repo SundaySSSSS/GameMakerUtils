@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include "Sprite.h"
 
 namespace Ui {
 class Widget;
@@ -15,11 +16,12 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
-
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::Widget *ui;
     QGraphicsScene m_scene;
+    Sprite* m_pSprite;
 };
 
 #endif // WIDGET_H

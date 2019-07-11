@@ -1,11 +1,11 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include "Sprite.h"
 #include <math.h>
 #include <qmath.h>
 #include <QGraphicsView>
 #include <QtMath>
 #include <QDebug>
+#include <QKeyEvent>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -30,10 +30,10 @@ Widget::Widget(QWidget *parent) :
         return;
     }
 
-    Sprite* pSprite = new Sprite();
-    pSprite->setPos(0, 0);
-    pSprite->setImage(image);
-    m_scene.addItem(pSprite);
+    m_pSprite = new Sprite();
+    m_pSprite->setPos(0, 0);
+    m_pSprite->setImage(image);
+    m_scene.addItem(m_pSprite);
 
     QGraphicsView* pView = ui->graphicsView;
     pView->setScene(&m_scene);
@@ -54,4 +54,25 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     delete ui;
+}
+
+void Widget::keyPressEvent(QKeyEvent *event)
+{
+    int key = event->key();
+    if (key == Qt::Key_W)
+    {
+        m_pSprite->setMoveCommand(Sprite::TURN_UP);
+    }
+    else if (key == Qt::Key_S)
+    {
+        m_pSprite->setMoveCommand(Sprite::TURN_DOWN);
+    }
+    else if (key == Qt::Key_A)
+    {
+        m_pSprite->setMoveCommand(Sprite::TURN_LEFT);
+    }
+    else if (key == Qt::Key_D)
+    {
+        m_pSprite->setMoveCommand(Sprite::TURN_RIGHT);
+    }
 }
