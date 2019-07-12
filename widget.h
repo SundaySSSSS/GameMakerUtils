@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QTimer>
 #include "Sprite.h"
 
 namespace Ui {
@@ -22,6 +23,7 @@ private:
     Ui::Widget *ui;
     QGraphicsScene m_scene;
     Sprite* m_pSprite;
+    QTimer m_timer;
 };
 
 #endif // WIDGET_H

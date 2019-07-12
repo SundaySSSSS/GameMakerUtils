@@ -2,6 +2,7 @@
 
 #include <QGraphicsScene>
 #include <QPainter>
+#include <QDebug>
 
 Sprite::Sprite()
 {
@@ -34,6 +35,32 @@ void Sprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
     }
 }
 
+void Sprite::advance(int phase)
+{
+    //qDebug() << "sprite advance" << phase;
+    if (1 == phase)
+    {
+        switch(m_curCmd)
+        {
+        case Sprite::UP:
+            m_curImg = m_pImageMng->getNextImage(SpriteImageMng::UP);
+            break;
+        case Sprite::DOWN:
+            m_curImg = m_pImageMng->getNextImage(SpriteImageMng::DOWN);
+            break;
+        case Sprite::LEFT:
+            m_curImg = m_pImageMng->getNextImage(SpriteImageMng::LEFT);
+            break;
+        case Sprite::RIGHT:
+            m_curImg = m_pImageMng->getNextImage(SpriteImageMng::RIGHT);
+            break;
+        default:
+            qDebug() << "unknown cmd" << m_curCmd;
+        }
+        update();
+    }
+}
+
 void Sprite::setImage(const QImage& image)
 {
     if (nullptr != m_pImageMng)
@@ -46,6 +73,7 @@ void Sprite::setImage(const QImage& image)
 
 void Sprite::setMoveCommand(Sprite::MoveCmd cmd)
 {
+    m_curCmd = cmd;
     switch(cmd)
     {
     case TURN_UP:
@@ -60,9 +88,22 @@ void Sprite::setMoveCommand(Sprite::MoveCmd cmd)
     case TURN_RIGHT:
         m_curImg = m_pImageMng->getImage(SpriteImageMng::RIGHT1);
         break;
+    case RIGHT:
+        m_curImg = m_pImageMng->getNextImage(SpriteImageMng::RIGHT);
+        break;
+    case LEFT:
+        m_curImg = m_pImageMng->getNextImage(SpriteImageMng::LEFT);
+        break;
+    case UP:
+        m_curImg = m_pImageMng->getNextImage(SpriteImageMng::UP);
+        break;
+    case DOWN:
+        m_curImg = m_pImageMng->getNextImage(SpriteImageMng::DOWN);
+        break;
     default:
         break;
     }
+
     update();
 
 }

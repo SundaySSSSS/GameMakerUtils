@@ -48,7 +48,10 @@ Widget::Widget(QWidget *parent) :
 
     pView->setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Colliding Mice"));
     pView->resize(400, 300);
-    //pView.show();
+
+
+    QObject::connect(&m_timer, SIGNAL(timeout()), &m_scene, SLOT(advance()));
+    m_timer.start(2000);
 }
 
 Widget::~Widget()
@@ -61,18 +64,19 @@ void Widget::keyPressEvent(QKeyEvent *event)
     int key = event->key();
     if (key == Qt::Key_W)
     {
-        m_pSprite->setMoveCommand(Sprite::TURN_UP);
+        m_pSprite->setMoveCommand(Sprite::UP);
     }
     else if (key == Qt::Key_S)
     {
-        m_pSprite->setMoveCommand(Sprite::TURN_DOWN);
+        m_pSprite->setMoveCommand(Sprite::DOWN);
     }
     else if (key == Qt::Key_A)
     {
-        m_pSprite->setMoveCommand(Sprite::TURN_LEFT);
+        m_pSprite->setMoveCommand(Sprite::LEFT);
     }
     else if (key == Qt::Key_D)
     {
-        m_pSprite->setMoveCommand(Sprite::TURN_RIGHT);
+        m_pSprite->setMoveCommand(Sprite::RIGHT);
     }
+    qDebug() << "key pressed" << event->text();
 }

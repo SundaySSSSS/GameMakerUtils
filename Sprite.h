@@ -22,10 +22,11 @@ public:
     MoveCmd;
 
     Sprite();
-    ~Sprite();
+    ~Sprite() override;
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
+    void advance(int phase) override;
     //设置角色行走图
     void setImage(const QImage& image);
     //发送移动命令

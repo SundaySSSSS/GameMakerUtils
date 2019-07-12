@@ -23,9 +23,20 @@ public:
         RIGHT3,
     }
     ImgPiece;
-    SpriteImageMng(const QImage& image);
+    typedef enum _ImgType
+    {
+        UP = 0,
+        DOWN,
+        LEFT,
+        RIGHT,
+    }
+    ImgType;
 
+    SpriteImageMng(const QImage& image);
+    //直接获取指定图片
     QImage getImage(ImgPiece imgPieceIndex);
+    //获取某一行为的下一张图片
+    QImage getNextImage(ImgType type);
 private:
     QImage m_image;
     QMap<ImgPiece, QImage> m_mapPieceToImage;

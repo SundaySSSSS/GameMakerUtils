@@ -1,4 +1,5 @@
 #include "SpriteImageMng.h"
+#include <QDebug>
 
 SpriteImageMng::SpriteImageMng(const QImage& image)
 {
@@ -27,4 +28,28 @@ SpriteImageMng::SpriteImageMng(const QImage& image)
 QImage SpriteImageMng::getImage(SpriteImageMng::ImgPiece imgPieceIndex)
 {
     return m_mapPieceToImage.value(imgPieceIndex);
+}
+
+QImage SpriteImageMng::getNextImage(SpriteImageMng::ImgType type)
+{
+    QImage image;
+    static int type_index[4] = {0, 0, 0, 0};
+    switch(type)
+    {
+    case ImgType::UP:
+        image = getImage(static_cast<ImgPiece>(ImgPiece::UP1 + type_index[type]));
+        break;
+    case ImgType::DOWN:
+        image = getImage(static_cast<ImgPiece>(ImgPiece::DOWN1 + type_index[type]));
+        break;
+    case ImgType::LEFT:
+        image = getImage(static_cast<ImgPiece>(ImgPiece::LEFT1 + type_index[type]));
+        break;
+    case ImgType::RIGHT:
+    default:
+        image = getImage(static_cast<ImgPiece>(ImgPiece::RIGHT1 + type_index[type]));
+        break;
+    }
+    type_index[type] = (++type_index[type]) % 3;
+    return image;
 }
